@@ -3,6 +3,7 @@ package lexer
 import (
 	"errors"
 	"strconv"
+	"strings"
 )
 
 type Lexer struct {
@@ -33,12 +34,18 @@ func (l *Lexer) advance() {
 }
 
 func isDigit(c string) bool {
-	_, err := strconv.ParseInt(c, 10, 64)
-	if err != nil {
-		_, err2 := strconv.ParseFloat(c, 64)
-		return err2 == nil
-	}
+	_, err := strconv.ParseFloat(c, 64)
 	return err == nil
+}
+
+func (l *Lexer) makeDigitToken() Token {
+	var value string
+	for isDigit(l.currentChar) {
+		value += strings.TrimSpace(l.currentChar)
+		l.advance()
+	}
+
+	return Token{Type: DIGIT, Value: value}
 }
 
 func (l *Lexer) Tokenize() ([]Token, error) {
@@ -85,12 +92,7 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 
 		default:
 			if isDigit(l.currentChar) {
-				token := Token{Type: DIGIT, Value: l.currentChar}
-				for isDigit(l.currentChar) {
-					l.advance()
-					token.Value += l.currentChar
-				}
-				tokens = append(tokens, token)
+				tokens = append(tokens, l.makeDigitToken())
 				l.advance()
 			} else {
 				return []Token{}, errors.New("invalid character")
