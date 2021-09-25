@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 )
@@ -31,6 +32,13 @@ func (l *Lexer) advance() {
 	} else {
 		l.currentChar = string(l.input[l.position])
 	}
+}
+
+func (l *Lexer) reportError(err error) {
+	fmt.Printf("%s%s",
+		l.input,
+		strings.Repeat(" ", l.position) + "^ " + err.Error() + "\n",
+	)
 }
 
 func isDigit(c string) bool {
@@ -95,7 +103,9 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 				tokens = append(tokens, l.makeDigitToken())
 				l.advance()
 			} else {
-				return []Token{}, errors.New("invalid character")
+				err := errors.New("invalid character")
+				l.reportError(err)
+				return []Token{}, err
 			}
 		}
 	}

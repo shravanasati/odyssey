@@ -22,7 +22,6 @@ func main() {
 		tokens, err := lexer.Tokenize()
 
 		if err != nil {
-			fmt.Println(err)
 			continue
 		}
 
