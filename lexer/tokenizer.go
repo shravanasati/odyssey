@@ -58,22 +58,31 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 		case "/":
 			tokens = append(tokens, Token{Type: DIV_OP, Value: l.currentChar})
 			l.advance()
+
+		case "^":
+			tokens = append(tokens, Token{Type: POW_OP, Value: l.currentChar})
+			l.advance()
+		case "%":
+			tokens = append(tokens, Token{Type: MOD_OP, Value: l.currentChar})
+			l.advance()
+
+		case "==":
+			tokens = append(tokens, Token{Type: EQ_OP, Value: l.currentChar})
+			l.advance()
+		case "!=":
+			tokens = append(tokens, Token{Type: NEQ_OP, Value: l.currentChar})
+			l.advance()
+
 		case "(":
 			tokens = append(tokens, Token{Type: LPAREN, Value: l.currentChar})
 			l.advance()
 		case ")":
 			tokens = append(tokens, Token{Type: RPAREN, Value: l.currentChar})
 			l.advance()
-		case " ":
+
+		case " ", "\n", "\t", "\r", "":
 			l.advance()
-		case "\n":
-			l.advance()
-		case "\t":
-			l.advance()
-		case "\r":
-			l.advance()
-		case "":
-			l.advance()
+
 		default:
 			if isDigit(l.currentChar) {
 				token := Token{Type: DIGIT, Value: l.currentChar}
