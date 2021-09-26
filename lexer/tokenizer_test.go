@@ -41,6 +41,14 @@ func Test_Tokenizer(t *testing.T) {
 		},
 
 		{
+			"5+5", []Token{
+				{DIGIT, "5"},
+				{PLUS_OP, "+"},
+				{DIGIT, "5"},
+			}, false,
+		},
+
+		{
 			"4545 ^ 19 % 27 + 121211 - 55", []Token{
 				{DIGIT, "4545"},
 				{POW_OP, "^"},
