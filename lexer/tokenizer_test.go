@@ -73,18 +73,17 @@ func Test_Tokenizer(t *testing.T) {
 		},
 
 		{
-			"(1 == (2 - 1)) != ( 5 / 7 ^ 8 % 4 )",
+			"(1 + (2 - 1)) * ( 5 / 7 ^ 8 % 4 )",
 			[]Token{
 				{LPAREN, "("},
 				{DIGIT, "1"},
-				{EQ_OP, "=="},
 				{LPAREN, "("},
 				{DIGIT, "2"},
 				{MINUS_OP, "-"},
 				{DIGIT, "1"},
 				{RPAREN, ")"},
 				{RPAREN, ")"},
-				{NEQ_OP, "!="},
+				{MULT_OP, "*"},
 				{LPAREN, "("},
 				{DIGIT, "5"},
 				{DIV_OP, "/"},

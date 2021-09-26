@@ -11,9 +11,6 @@ const (
 	MOD_OP TokenType = "MOD_OP"
 	POW_OP TokenType = "POW_OP"
 
-	EQ_OP TokenType = "EQ_OP"
-	NEQ_OP TokenType = "NEQ_OP"
-
 	LPAREN TokenType = "LPAREN"
 	RPAREN TokenType = "RPAREN"
 

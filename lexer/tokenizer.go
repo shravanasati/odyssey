@@ -81,13 +81,6 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 			tokens = append(tokens, Token{Type: MOD_OP, Value: l.currentChar})
 			l.advance()
 
-		case "==":
-			tokens = append(tokens, Token{Type: EQ_OP, Value: l.currentChar})
-			l.advance()
-		case "!=":
-			tokens = append(tokens, Token{Type: NEQ_OP, Value: l.currentChar})
-			l.advance()
-
 		case "(":
 			tokens = append(tokens, Token{Type: LPAREN, Value: l.currentChar})
 			l.advance()
