@@ -23,7 +23,11 @@ func main() {
 		}
 
 		lexer := lexer.NewLexer(text)
-		tokens, _ := lexer.Tokenize()
+		tokens, err := lexer.Tokenize()
+
+		if err != nil {
+			continue
+		}
 
 		for _, token := range tokens {
 			fmt.Printf("%v: %v\n", token.Type, token.Value)

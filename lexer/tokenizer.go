@@ -1,16 +1,16 @@
 package lexer
 
 import (
-	"errors"
 	"fmt"
 	"strconv"
 	"strings"
 )
 
 type Lexer struct {
-	input       string
-	position    int    // current position in input (points to current char)
-	currentChar string // current char under examination
+	input         string
+	position      int    // current position in input (points to current char)
+	currentChar   string // current char under examination
+	errorReported bool	 // whether an error has been reported
 }
 
 type Token struct {
@@ -37,8 +37,9 @@ func (l *Lexer) advance() {
 func (l *Lexer) reportError(err error) {
 	fmt.Printf("%s%s",
 		l.input,
-		strings.Repeat(" ", l.position) + "^ " + err.Error() + "\n",
+		strings.Repeat(" ", l.position)+"^ "+err.Error()+"\n",
 	)
+	l.errorReported = true
 }
 
 func isDigit(c string) bool {
@@ -46,10 +47,18 @@ func isDigit(c string) bool {
 	return err == nil
 }
 
+func isDecimal(c string) bool {
+	return c == "."
+}
+
 func (l *Lexer) makeDigitToken() Token {
 	var value string
-	for isDigit(l.currentChar) {
+	for isDigit(l.currentChar) || isDecimal(l.currentChar) {
 		value += strings.TrimSpace(l.currentChar)
+		if strings.Count(value, ".") > 1 {
+			l.reportError(multipleDecimals)
+			return Token{}
+		}
 		l.advance()
 	}
 
@@ -59,7 +68,7 @@ func (l *Lexer) makeDigitToken() Token {
 func (l *Lexer) Tokenize() ([]Token, error) {
 	var tokens []Token
 
-	for l.position < len(l.input) {
+	for l.position < len(l.input) && !l.errorReported {
 		switch l.currentChar {
 		case "+":
 			tokens = append(tokens, Token{Type: PLUS_OP, Value: l.currentChar})
@@ -94,11 +103,12 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 		default:
 			if isDigit(l.currentChar) {
 				tokens = append(tokens, l.makeDigitToken())
-				l.advance()
+				// not advancing here because the makeDigitToken method
+				// does it itself
+				// l.advance()
 			} else {
-				err := errors.New("invalid character")
-				l.reportError(err)
-				return []Token{}, err
+				l.reportError(invalidCharacter)
+				return []Token{}, invalidCharacter
 			}
 		}
 	}
