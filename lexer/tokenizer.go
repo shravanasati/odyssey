@@ -99,7 +99,7 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 			l.advance()
 
 		default:
-			if isDigit(l.currentChar) {
+			if isDigit(l.currentChar) || isDecimal(l.currentChar) {
 				numberToken, err := l.makeDigitToken()
 				if err != nil {
 					return []Token{}, err
