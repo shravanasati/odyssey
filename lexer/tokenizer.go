@@ -7,10 +7,9 @@ import (
 )
 
 type Lexer struct {
-	input         string
-	position      int    // current position in input (points to current char)
-	currentChar   string // current char under examination
-	errorReported bool	 // whether an error has been reported
+	input       string
+	position    int    // current position in input (points to current char)
+	currentChar string // current char under examination
 }
 
 type Token struct {
@@ -39,7 +38,6 @@ func (l *Lexer) reportError(err error) {
 		l.input,
 		strings.Repeat(" ", l.position)+"^ "+err.Error()+"\n",
 	)
-	l.errorReported = true
 }
 
 func isDigit(c string) bool {
@@ -51,24 +49,24 @@ func isDecimal(c string) bool {
 	return c == "."
 }
 
-func (l *Lexer) makeDigitToken() Token {
+func (l *Lexer) makeDigitToken() (Token, error) {
 	var value string
 	for isDigit(l.currentChar) || isDecimal(l.currentChar) {
 		value += strings.TrimSpace(l.currentChar)
 		if strings.Count(value, ".") > 1 {
-			l.reportError(multipleDecimals)
-			return Token{}
+			l.reportError(errMultipleDecimals)
+			return Token{}, errMultipleDecimals
 		}
 		l.advance()
 	}
 
-	return Token{Type: DIGIT, Value: value}
+	return Token{Type: DIGIT, Value: value}, nil
 }
 
 func (l *Lexer) Tokenize() ([]Token, error) {
 	var tokens []Token
 
-	for l.position < len(l.input) && !l.errorReported {
+	for l.position < len(l.input) {
 		switch l.currentChar {
 		case "+":
 			tokens = append(tokens, Token{Type: PLUS_OP, Value: l.currentChar})
@@ -102,13 +100,17 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 
 		default:
 			if isDigit(l.currentChar) {
-				tokens = append(tokens, l.makeDigitToken())
+				numberToken, err := l.makeDigitToken()
+				if err != nil {
+					return []Token{}, err
+				}
+				tokens = append(tokens, numberToken)
 				// not advancing here because the makeDigitToken method
 				// does it itself
 				// l.advance()
 			} else {
-				l.reportError(invalidCharacter)
-				return []Token{}, invalidCharacter
+				l.reportError(errInvalidCharacter)
+				return []Token{}, errInvalidCharacter
 			}
 		}
 	}

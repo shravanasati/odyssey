@@ -11,8 +11,6 @@ import (
 
 func main() {
 	reader := bufio.NewReader(os.Stdin)
-	// lexer := lexer.NewLexer("5+55")
-	// lexer.Tokenize()
 
 	for {
 		fmt.Print("odyssey> ")

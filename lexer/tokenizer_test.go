@@ -31,7 +31,7 @@ func Test_isDigit(t *testing.T) {
 func Test_Tokenizer(t *testing.T) {
 	tests := []lexerTest{
 		{
-			"1 / 8 * 9", []Token{
+			"1 / 8 *     9", []Token{
 				{DIGIT, "1"},
 				{DIV_OP, "/"},
 				{DIGIT, "8"},
@@ -49,14 +49,14 @@ func Test_Tokenizer(t *testing.T) {
 		},
 
 		{
-			"4545 ^ 19 % 27 + 121211 - 55", []Token{
+			"4545 ^ 19 % 27 + 121.211 - 55", []Token{
 				{DIGIT, "4545"},
 				{POW_OP, "^"},
 				{DIGIT, "19"},
 				{MOD_OP, "%"},
 				{DIGIT, "27"},
 				{PLUS_OP, "+"},
-				{DIGIT, "121211"},
+				{DIGIT, "121.211"},
 				{MINUS_OP, "-"},
 				{DIGIT, "55"},
 			}, false,
@@ -85,6 +85,7 @@ func Test_Tokenizer(t *testing.T) {
 			[]Token{
 				{LPAREN, "("},
 				{DIGIT, "1"},
+				{PLUS_OP, "+"},
 				{LPAREN, "("},
 				{DIGIT, "2"},
 				{MINUS_OP, "-"},
@@ -107,10 +108,15 @@ func Test_Tokenizer(t *testing.T) {
 		{
 			"this is gonna fail", []Token{}, true,
 		},
+
+		{
+			"12.23 + 89.254.1", nil, true,
+		},
 	}
 
 	for _, test := range tests {
 		l := NewLexer(test.input)
+
 		result, err := l.Tokenize()
 		if err != nil && !test.wantErr {
 			t.Errorf("Tokenize(%q) returned error %q", test.input, err)
@@ -118,6 +124,7 @@ func Test_Tokenizer(t *testing.T) {
 		if err == nil && test.wantErr {
 			t.Errorf("Tokenize(%q) did not return error", test.input)
 		}
+
 		if !test.wantErr {
 			if len(result) != len(test.tokens) {
 				t.Errorf("Tokenize(%q) returned %d tokens, expected %d", test.input, len(result), len(test.tokens))
