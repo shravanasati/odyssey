@@ -64,7 +64,11 @@ func (l *Lexer) makeNumberToken() (Token, error) {
 		}
 		l.advance()
 	}
-
+	// add 0 at the start of a number if it starts with a decimal point
+	// eg .52 => 0.52
+	if string(value[0]) == "." {
+		value = "0" + value
+	}
 	return Token{Type: NUMBER, Value: value}, nil
 }
 
