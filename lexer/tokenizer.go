@@ -2,6 +2,7 @@ package lexer
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 )
@@ -49,7 +50,11 @@ func isDecimal(c string) bool {
 	return c == "."
 }
 
-func (l *Lexer) makeDigitToken() (Token, error) {
+func floatToString(f float64) string {
+	return strconv.FormatFloat(f, 'E', -1, 64)
+}
+
+func (l *Lexer) makeNumberToken() (Token, error) {
 	var value string
 	for isDigit(l.currentChar) || isDecimal(l.currentChar) {
 		value += strings.TrimSpace(l.currentChar)
@@ -60,7 +65,7 @@ func (l *Lexer) makeDigitToken() (Token, error) {
 		l.advance()
 	}
 
-	return Token{Type: DIGIT, Value: value}, nil
+	return Token{Type: NUMBER, Value: value}, nil
 }
 
 func (l *Lexer) Tokenize() ([]Token, error) {
@@ -98,9 +103,25 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 		case " ", "\n", "\t", "\r", "":
 			l.advance()
 
+		case "e":
+			tokens = append(tokens, Token{Type: NUMBER, Value: floatToString(math.E)})
+			l.advance()
+
+		case "p":
+			if string(l.input[l.position + 1]) == "i" {
+				tokens = append(tokens, 
+					Token{Type: NUMBER, Value: floatToString(math.Pi)})
+				l.advance()
+				l.advance()
+				// advancing twice because we've checked for two letters pi
+			} else {
+				l.reportError(errInvalidCharacter)
+				return []Token{}, errInvalidCharacter
+			}
+
 		default:
 			if isDigit(l.currentChar) || isDecimal(l.currentChar) {
-				numberToken, err := l.makeDigitToken()
+				numberToken, err := l.makeNumberToken()
 				if err != nil {
 					return []Token{}, err
 				}
