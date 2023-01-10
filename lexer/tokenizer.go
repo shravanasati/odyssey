@@ -117,7 +117,7 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 					Token{Type: NUMBER, Value: floatToString(math.Pi)})
 				l.advance()
 				l.advance()
-				// advancing twice because we've checked for two letters pi
+				// advancing twice because we've checked for two letters, pi
 			} else {
 				l.reportError(errInvalidCharacter)
 				return []Token{}, errInvalidCharacter

@@ -1,6 +1,9 @@
 package lexer
 
-import "testing"
+import (
+	"math"
+	"testing"
+)
 
 type lexerTest struct {
 	input   string
@@ -103,6 +106,17 @@ func Test_Tokenizer(t *testing.T) {
 				{NUMBER, "4"},
 				{RPAREN, ")"},
 			}, false,
+		},
+
+		{
+			"pi *e + .25", []Token{
+				{NUMBER, floatToString(math.Pi)},
+				{MULT_OP, "*"},
+				{NUMBER, floatToString(math.E)},
+				{PLUS_OP, "+"},
+				{NUMBER, "0.25"},
+			},
+			false,
 		},
 
 		{
