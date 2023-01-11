@@ -13,10 +13,6 @@ type Lexer struct {
 	currentChar string // current char under examination
 }
 
-type Token struct {
-	Type  TokenType
-	Value string
-}
 
 func NewLexer(input string) *Lexer {
 	return &Lexer{

@@ -29,7 +29,7 @@ func main() {
 		}
 
 		for _, token := range tokens {
-			fmt.Printf("%v: %v\n", token.Type, token.Value)
+			fmt.Println(token.String())
 		}
 	}
 }
