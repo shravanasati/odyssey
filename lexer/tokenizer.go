@@ -13,7 +13,6 @@ type Lexer struct {
 	currentChar string // current char under examination
 }
 
-
 func NewLexer(input string) *Lexer {
 	return &Lexer{
 		input:    input,
@@ -108,8 +107,8 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 			l.advance()
 
 		case "p":
-			if string(l.input[l.position + 1]) == "i" {
-				tokens = append(tokens, 
+			if string(l.input[l.position+1]) == "i" {
+				tokens = append(tokens,
 					Token{Type: NUMBER, Value: floatToString(math.Pi)})
 				l.advance()
 				l.advance()

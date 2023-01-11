@@ -34,6 +34,15 @@ func Test_isDigit(t *testing.T) {
 func Test_Tokenizer(t *testing.T) {
 	tests := []lexerTest{
 		{
+			"", []Token{}, false,
+		},
+
+		{
+			"   \t \t \n  \r",
+			[]Token{}, false,
+		},
+
+		{
 			"1 / 8 *     9", []Token{
 				{NUMBER, "1"},
 				{DIV_OP, "/"},

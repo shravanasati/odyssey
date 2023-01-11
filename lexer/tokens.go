@@ -19,7 +19,7 @@ var (
 	NUMBER TokenType = "NUMBER"
 )
 
-// Token represents a token, having a TokenType and a Value.
+// Token represents a token, and has a TokenType and a Value.
 type Token struct {
 	Type  TokenType
 	Value string
