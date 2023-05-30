@@ -63,7 +63,7 @@ func Test_Tokenizer(t *testing.T) {
 		{
 			"4545 ^ 19 % 27 + 121.211 - 55.", []Token{
 				{NUMBER, "4545"},
-				{POW_OP, "^"},
+				{EXP_OP, "^"},
 				{NUMBER, "19"},
 				{MOD_OP, "%"},
 				{NUMBER, "27"},
@@ -109,7 +109,7 @@ func Test_Tokenizer(t *testing.T) {
 				{NUMBER, "5"},
 				{DIV_OP, "/"},
 				{NUMBER, "7"},
-				{POW_OP, "^"},
+				{EXP_OP, "^"},
 				{NUMBER, "8"},
 				{MOD_OP, "%"},
 				{NUMBER, "4"},

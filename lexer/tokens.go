@@ -11,7 +11,7 @@ var (
 	MULT_OP  TokenType = "MULT_OP"
 	DIV_OP   TokenType = "DIV_OP"
 	MOD_OP   TokenType = "MOD_OP"
-	POW_OP   TokenType = "POW_OP"
+	EXP_OP   TokenType = "EXP_OP"
 
 	LPAREN TokenType = "LPAREN"
 	RPAREN TokenType = "RPAREN"
@@ -19,7 +19,7 @@ var (
 	NUMBER TokenType = "NUMBER"
 )
 
-// Token represents a token, and has a TokenType and a Value.
+// Token represents a token, has a TokenType and a Value.
 type Token struct {
 	Type  TokenType
 	Value string

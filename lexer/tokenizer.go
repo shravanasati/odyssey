@@ -91,7 +91,7 @@ func (l *Lexer) Tokenize() ([]Token, error) {
 			l.advance()
 
 		case "^":
-			tokens = append(tokens, Token{Type: POW_OP, Value: l.currentChar})
+			tokens = append(tokens, Token{Type: EXP_OP, Value: l.currentChar})
 			l.advance()
 		case "%":
 			tokens = append(tokens, Token{Type: MOD_OP, Value: l.currentChar})
