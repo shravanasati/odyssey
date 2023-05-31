@@ -7,6 +7,7 @@ import (
 	"strings"
 
 	"github.com/Shravan-1908/odyssey/lexer"
+	"github.com/Shravan-1908/odyssey/parser"
 )
 
 func main() {
@@ -28,8 +29,10 @@ func main() {
 			continue
 		}
 
-		for _, token := range tokens {
-			fmt.Println(token.String())
+		parser := parser.NewParser(tokens)
+		output := parser.Parse()
+		if output != nil {
+			fmt.Println(output.String())
 		}
 	}
 }

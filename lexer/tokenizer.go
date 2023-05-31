@@ -30,9 +30,9 @@ func (l *Lexer) advance() {
 }
 
 func (l *Lexer) reportError(err error) {
-	fmt.Printf("%s%s",
+	fmt.Printf("%s%s\n",
 		l.input,
-		strings.Repeat(" ", l.position)+"^ "+err.Error()+"\n",
+		strings.Repeat(" ", l.position)+"^ "+err.Error(),
 	)
 }
 
@@ -47,6 +47,14 @@ func isDecimal(c string) bool {
 
 func floatToString(f float64) string {
 	return strconv.FormatFloat(f, 'E', -1, 64)
+}
+
+func stringToFloat(s string) float64 {
+	f, e := strconv.ParseFloat(s, 64)
+	if e != nil {
+		panic(fmt.Sprintf("stringToFloat(%s): not convertable", s))
+	}
+	return f
 }
 
 func (l *Lexer) makeNumberToken() (Token, error) {
@@ -69,6 +77,7 @@ func (l *Lexer) makeNumberToken() (Token, error) {
 	if string(value[len(value)-1]) == "." {
 		value += "0"
 	}
+	value += ".0"
 	return Token{Type: NUMBER, Value: value}, nil
 }
 
