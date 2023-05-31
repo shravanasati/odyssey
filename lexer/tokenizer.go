@@ -77,7 +77,10 @@ func (l *Lexer) makeNumberToken() (Token, error) {
 	if string(value[len(value)-1]) == "." {
 		value += "0"
 	}
-	value += ".0"
+	// to ensure all integers are converted into float
+	if strings.Count(value, ".") == 0 {
+		value += ".0"
+	}
 	return Token{Type: NUMBER, Value: value}, nil
 }
 

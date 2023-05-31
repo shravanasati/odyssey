@@ -30,8 +30,9 @@ func main() {
 		}
 
 		parser := parser.NewParser(tokens)
-		output := parser.Parse()
-		if output != nil {
+		output, er := parser.Parse()
+		// todo fix nil dereference on invalid syntax
+		if er == nil && output != nil {
 			fmt.Println(output.String())
 		}
 	}

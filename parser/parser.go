@@ -3,7 +3,7 @@ package parser
 import (
 	"errors"
 	"fmt"
-	"strings"
+	// "strings"
 
 	"github.com/Shravan-1908/odyssey/lexer"
 )
@@ -44,23 +44,24 @@ func (p *Parser) advance() {
 }
 
 func (p *Parser) reportError(err error) {
-	fmt.Printf(
-		"%s\n%s\n",
-		p.currentToken.String(),
-		strings.Repeat(" ", p.position)+"^ "+err.Error(),
-	)
+	// fmt.Printf(
+	// 	"%s\n%s\n",
+	// 	p.currentToken.String(),
+	// 	strings.Repeat(" ", p.position)+"^ "+err.Error(),
+	// )
+	fmt.Println(err.Error())
 }
 
-func (p *Parser) Parse() Node {
+func (p *Parser) Parse() (Node, error) {
 	if (p.currentToken == lexer.Token{}) {
-		return nil
+		return nil, nil
 	}
 	result := p.expr()
 	if (p.currentToken != lexer.Token{}) {
 		p.reportError(errInvalidSyntax)
-		return nil
+		return nil, errInvalidSyntax
 	}
-	return result
+	return result, nil
 }
 
 func (p *Parser) expr() Node {
@@ -105,7 +106,7 @@ func (p *Parser) term() Node {
 
 func (p *Parser) factor() Node {
 	token := p.currentToken
-	switch p.currentToken.Type {
+	switch token.Type {
 	case lexer.LPAREN:
 		p.advance()
 		result := p.expr()
