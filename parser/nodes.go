@@ -7,69 +7,69 @@ type Node interface {
 }
 
 type NumberNode struct {
-	value string
+	Value string
 }
 
 func (nn NumberNode) String() string {
-	return nn.value
+	return nn.Value
 }
 
 type AddNode struct {
-	leftNode  Node
-	rightNode Node
+	LeftNode  Node
+	RightNode Node
 }
 
 func (an AddNode) String() string {
-	return fmt.Sprintf("(%v + %v)", an.leftNode.String(), an.rightNode.String())
+	return fmt.Sprintf("(%v + %v)", an.LeftNode.String(), an.RightNode.String())
 }
 
 type SubstractNode struct {
-	leftNode  Node
-	rightNode Node
+	LeftNode  Node
+	RightNode Node
 }
 
 func (sn SubstractNode) String() string {
-	return fmt.Sprintf("(%v - %v)", sn.leftNode.String(), sn.rightNode.String())
+	return fmt.Sprintf("(%v - %v)", sn.LeftNode.String(), sn.RightNode.String())
 }
 
 type MultiplyNode struct {
-	leftNode  Node
-	rightNode Node
+	LeftNode  Node
+	RightNode Node
 }
 
 func (mn MultiplyNode) String() string {
-	return fmt.Sprintf("(%v * %v)", mn.leftNode.String(), mn.rightNode.String())
+	return fmt.Sprintf("(%v * %v)", mn.LeftNode.String(), mn.RightNode.String())
 }
 
 type DivideNode struct {
-	leftNode  Node
-	rightNode Node
+	LeftNode  Node
+	RightNode Node
 }
 
 func (dn DivideNode) String() string {
-	return fmt.Sprintf("(%v / %v)", dn.leftNode.String(), dn.rightNode.String())
+	return fmt.Sprintf("(%v / %v)", dn.LeftNode.String(), dn.RightNode.String())
 }
 
 type ExponentNode struct {
-	leftNode  Node
-	rightNode Node
+	LeftNode  Node
+	RightNode Node
 }
 
 func (en ExponentNode) String() string {
-	return fmt.Sprintf("(%v ^ %v)", en.leftNode.String(), en.rightNode.String())
+	return fmt.Sprintf("(%v ^ %v)", en.LeftNode.String(), en.RightNode.String())
 }
 
 type ModulusNode struct {
-	leftNode  Node
-	rightNode Node
+	LeftNode  Node
+	RightNode Node
 }
 
 func (mn ModulusNode) String() string {
-	return fmt.Sprintf("(%v %% %v)", mn.leftNode.String(), mn.rightNode.String())
+	return fmt.Sprintf("(%v %% %v)", mn.LeftNode.String(), mn.RightNode.String())
 }
 
 type UnaryPlusNode struct {
-	node  Node
+	node Node
 }
 
 func (un UnaryPlusNode) String() string {

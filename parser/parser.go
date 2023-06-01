@@ -74,7 +74,7 @@ func (p *Parser) expr() Node {
 		if p.currentToken.Type == lexer.PLUS_OP {
 			p.advance()
 			result = AddNode{result, p.term()}
-		
+
 		} else if p.currentToken.Type == lexer.MINUS_OP {
 			p.advance()
 			result = SubstractNode{result, p.term()}

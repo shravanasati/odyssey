@@ -6,6 +6,7 @@ import (
 	"os"
 	"strings"
 
+	"github.com/Shravan-1908/odyssey/interpreter"
 	"github.com/Shravan-1908/odyssey/lexer"
 	"github.com/Shravan-1908/odyssey/parser"
 )
@@ -34,6 +35,8 @@ func main() {
 		// todo fix nil dereference on invalid syntax
 		if er == nil && output != nil {
 			fmt.Println(output.String())
+			interpreter := interpreter.NewInterpreter()
+			fmt.Println(interpreter.Visit(output))
 		}
 	}
 }

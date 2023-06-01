@@ -49,14 +49,6 @@ func floatToString(f float64) string {
 	return strconv.FormatFloat(f, 'E', -1, 64)
 }
 
-func stringToFloat(s string) float64 {
-	f, e := strconv.ParseFloat(s, 64)
-	if e != nil {
-		panic(fmt.Sprintf("stringToFloat(%s): not convertable", s))
-	}
-	return f
-}
-
 func (l *Lexer) makeNumberToken() (Token, error) {
 	var value string
 	for isDigit(l.currentChar) || isDecimal(l.currentChar) {
