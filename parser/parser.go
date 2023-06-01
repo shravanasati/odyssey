@@ -19,6 +19,7 @@ func itemInSlice[T comparable](item T, list []T) bool {
 	return false
 }
 
+// todo write parser tests
 type Parser struct {
 	tokens       []lexer.Token
 	position     int         // current position in tokens (points to current token)
@@ -44,12 +45,13 @@ func (p *Parser) advance() {
 }
 
 func (p *Parser) reportError(err error) {
+	fmt.Printf("%s near %v \n", err.Error(), p.currentToken.String())
 	// fmt.Printf(
 	// 	"%s\n%s\n",
 	// 	p.currentToken.String(),
 	// 	strings.Repeat(" ", p.position)+"^ "+err.Error(),
 	// )
-	fmt.Println(err.Error())
+	// fmt.Println(err.Error())
 }
 
 func (p *Parser) Parse() (Node, error) {
