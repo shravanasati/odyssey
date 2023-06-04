@@ -26,21 +26,21 @@ func NewInterpreter() *Interpreter {
 }
 
 func (ip *Interpreter) Visit(node parser.Node) float64 {
-	switch node.(type) {
+	switch node := node.(type) {
 	case parser.NumberNode:
-		return ip.visitNumberNode(node.(parser.NumberNode))
+		return ip.visitNumberNode(node)
 	case parser.AddNode:
-		return ip.visitAddNode(node.(parser.AddNode))
+		return ip.visitAddNode(node)
 	case parser.SubstractNode:
-		return ip.visitSubstractNode(node.(parser.SubstractNode))
+		return ip.visitSubstractNode(node)
 	case parser.MultiplyNode:
-		return ip.visitMultiplyNode(node.(parser.MultiplyNode))
+		return ip.visitMultiplyNode(node)
 	case parser.DivideNode:
-		return ip.visitDivideNode(node.(parser.DivideNode))
+		return ip.visitDivideNode(node)
 	case parser.ExponentNode:
-		return ip.visitExponentNode(node.(parser.ExponentNode))
+		return ip.visitExponentNode(node)
 	case parser.ModulusNode:
-		return ip.visitModulusNode(node.(parser.ModulusNode))
+		return ip.visitModulusNode(node)
 	default:
 		panic(fmt.Sprintf("unknown node: %v \n", node))
 	}
