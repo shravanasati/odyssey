@@ -6,7 +6,7 @@ import (
 	"math"
 	"strconv"
 
-	"github.com/Shravan-1908/odyssey/parser"
+	"github.com/shravanasati/odyssey/parser"
 )
 
 var errZeroDivision = errors.New("zero division error")

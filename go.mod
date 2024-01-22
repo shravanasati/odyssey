@@ -1,3 +1,3 @@
-module github.com/Shravan-1908/odyssey
+module github.com/shravanasati/odyssey
 
 go 1.20

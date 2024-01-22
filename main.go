@@ -6,9 +6,9 @@ import (
 	"os"
 	"strings"
 
-	"github.com/Shravan-1908/odyssey/interpreter"
-	"github.com/Shravan-1908/odyssey/lexer"
-	"github.com/Shravan-1908/odyssey/parser"
+	"github.com/shravanasati/odyssey/interpreter"
+	"github.com/shravanasati/odyssey/lexer"
+	"github.com/shravanasati/odyssey/parser"
 )
 
 func main() {

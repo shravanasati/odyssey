@@ -5,7 +5,7 @@ import (
 	"fmt"
 	// "strings"
 
-	"github.com/Shravan-1908/odyssey/lexer"
+	"github.com/shravanasati/odyssey/lexer"
 )
 
 var errInvalidSyntax = errors.New("invalid syntax")
